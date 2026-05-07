@@ -27,7 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <CommandPalette />
         <Sidebar />
-        <main className="ml-[220px] min-h-screen bg-bg-base">
+        {/* desktop: offset sidebar; mobile: offset top header + bottom nav */}
+        <main className="md:ml-[220px] pt-14 md:pt-0 pb-20 md:pb-0 min-h-screen bg-bg-base">
           {children}
         </main>
       </body>
