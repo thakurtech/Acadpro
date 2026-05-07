@@ -5,8 +5,6 @@ import { useAppStore, AREA_CONFIG, PRIORITY_CONFIG, type Priority, type LifeArea
 import { Plus, Zap, CheckCircle2, Circle, Inbox, Clock, Trash2, X } from "lucide-react";
 import toast from "react-hot-toast";
 
-const AREA_COLORS: Record<LifeArea,string> = { work:"#7c3aed", relationships:"#ff375f", health:"#30d158", finance:"#ffd60a", growth:"#0a84ff" };
-const PRIORITY_COLORS: Record<Priority,string> = { critical:"#ff453a", high:"#ff9f0a", medium:"#ffd60a", low:"rgba(255,255,255,0.3)" };
 
 type Filter = "all" | TaskStatus;
 const FILTERS: { id:Filter; label:string }[] = [
@@ -111,7 +109,7 @@ export default function TasksPage() {
           <button key={key} onClick={()=>setAreaF(areaF===key?"all":key)}
             className="px-3 py-1.5 rounded-xl text-[12px] font-semibold whitespace-nowrap shrink-0 transition-all"
             style={areaF===key
-              ? { background:`${AREA_COLORS[key]}18`, color:AREA_COLORS[key], border:`0.5px solid ${AREA_COLORS[key]}35` }
+              ? { background:`${AREA_CONFIG[key].color}18`, color:AREA_CONFIG[key].color, border:`0.5px solid ${AREA_CONFIG[key].color}35` }
               : { color:"rgba(255,255,255,0.3)" }}>
             {cfg.icon} {cfg.label}
           </button>
@@ -131,7 +129,7 @@ export default function TasksPage() {
               <button onClick={()=>task.status!=="done"&&completeTask(task.id)} className="shrink-0 transition-transform active:scale-90">
                 {task.status==="done"
                   ? <CheckCircle2 size={22} style={{ color:"#30d158" }} />
-                  : <Circle size={22} style={{ color:PRIORITY_COLORS[task.priority], opacity:0.7 }} />
+                  : <Circle size={22} style={{ color:PRIORITY_CONFIG[task.priority].color, opacity:0.7 }} />
                 }
               </button>
 
@@ -142,10 +140,10 @@ export default function TasksPage() {
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg"
-                    style={{ background:`${PRIORITY_COLORS[task.priority]}14`, color:PRIORITY_COLORS[task.priority] }}>
+                    style={{ background:`${PRIORITY_CONFIG[task.priority].color}14`, color:PRIORITY_CONFIG[task.priority].color }}>
                     {PRIORITY_CONFIG[task.priority].label}
                   </span>
-                  <div className="w-1.5 h-1.5 rounded-full" style={{ background:AREA_COLORS[task.area] }} />
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ background:AREA_CONFIG[task.area].color }} />
                   <span className="text-[11px] font-medium" style={{ color:"rgba(255,255,255,0.3)" }}>
                     {AREA_CONFIG[task.area].label}
                   </span>
@@ -215,9 +213,9 @@ export default function TasksPage() {
                       <button key={key} onClick={()=>setForm({...form,priority:key})}
                         className="flex items-center justify-center gap-1.5 py-2.5 rounded-2xl text-[12px] font-bold transition-all"
                         style={form.priority===key
-                          ? { background:`${PRIORITY_COLORS[key]}20`, color:PRIORITY_COLORS[key], border:`0.5px solid ${PRIORITY_COLORS[key]}35` }
+                          ? { background:`${PRIORITY_CONFIG[key].color}20`, color:PRIORITY_CONFIG[key].color, border:`0.5px solid ${PRIORITY_CONFIG[key].color}35` }
                           : { background:"rgba(255,255,255,0.04)", border:"0.5px solid rgba(255,255,255,0.08)", color:"rgba(255,255,255,0.35)" }}>
-                        <div className="w-2 h-2 rounded-full" style={{ background:PRIORITY_COLORS[key] }} />
+                        <div className="w-2 h-2 rounded-full" style={{ background:PRIORITY_CONFIG[key].color }} />
                         <span className="hidden sm:inline">{cfg.label}</span>
                       </button>
                     ))}
@@ -246,7 +244,7 @@ export default function TasksPage() {
                         <button key={key} onClick={()=>setForm({...form,area:key})}
                           className="flex items-center justify-center py-3 rounded-2xl text-[16px] transition-all"
                           style={form.area===key
-                            ? { background:`${AREA_COLORS[key]}18`, border:`0.5px solid ${AREA_COLORS[key]}35` }
+                            ? { background:`${AREA_CONFIG[key].color}18`, border:`0.5px solid ${AREA_CONFIG[key].color}35` }
                             : { background:"rgba(255,255,255,0.04)", border:"0.5px solid rgba(255,255,255,0.08)" }}
                           title={cfg.label}>
                           {cfg.icon}

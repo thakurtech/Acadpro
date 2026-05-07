@@ -164,16 +164,16 @@ export const useAppStore = create<AppState>()(
 );
 
 export const AREA_CONFIG: Record<LifeArea, { label: string; color: string; icon: string }> = {
-  work: { label: "Work", color: "#7c3aed", icon: "⚡" },
-  relationships: { label: "Relationships", color: "#ec4899", icon: "❤️" },
-  health: { label: "Health", color: "#10b981", icon: "💪" },
-  finance: { label: "Finance", color: "#f59e0b", icon: "💰" },
-  growth: { label: "Growth", color: "#3b82f6", icon: "🚀" },
+  work:          { label: "Work",          color: "#7c3aed", icon: "⚡" },
+  relationships: { label: "Relationships", color: "#ff375f", icon: "❤️" },
+  health:        { label: "Health",        color: "#30d158", icon: "💪" },
+  finance:       { label: "Finance",       color: "#ffd60a", icon: "💰" },
+  growth:        { label: "Growth",        color: "#0a84ff", icon: "🚀" },
 };
 
 export const PRIORITY_CONFIG: Record<Priority, { label: string; color: string }> = {
-  critical: { label: "Critical", color: "#ef4444" },
-  high: { label: "High", color: "#f97316" },
-  medium: { label: "Medium", color: "#f59e0b" },
-  low: { label: "Low", color: "#94a3b8" },
+  critical: { label: "Critical", color: "#ff453a" },
+  high:     { label: "High",     color: "#ff9f0a" },
+  medium:   { label: "Medium",   color: "#ffd60a" },
+  low:      { label: "Low",      color: "rgba(255,255,255,0.3)" },
 };

@@ -6,7 +6,6 @@ import { getGreeting, scoreToColor } from "@/lib/utils";
 import { CheckCircle2, Circle, Clock, Users, Zap, ArrowRight, TrendingUp, Command } from "lucide-react";
 import Link from "next/link";
 
-const AREA_COLORS: Record<string,string> = { work:"#7c3aed", relationships:"#ff375f", health:"#30d158", finance:"#ffd60a", growth:"#0a84ff" };
 
 function StatCard({ label, value, sub, color, progress, icon: Icon, delay }: {
   label:string; value:string|number; sub:string; color:string; progress:number; icon:React.ElementType; delay:number;
@@ -144,7 +143,7 @@ export default function Dashboard() {
                 {task.title}
               </span>
               <div className="flex items-center gap-2 shrink-0">
-                <div className="w-2 h-2 rounded-full" style={{ background:AREA_COLORS[task.area] }} />
+                <div className="w-2 h-2 rounded-full" style={{ background:AREA_CONFIG[task.area].color }} />
                 <span className="text-[11px] font-semibold" style={{ color:"rgba(255,255,255,0.3)" }}>
                   {AREA_CONFIG[task.area].label}
                 </span>

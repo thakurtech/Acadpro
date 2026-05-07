@@ -8,7 +8,6 @@ import { ChevronLeft, ChevronRight, Plus, X, Check, Trash2 } from "lucide-react"
 import toast from "react-hot-toast";
 
 const HOURS = Array.from({ length: 18 }, (_, i) => i + 5);
-const AREA_COLORS: Record<LifeArea,string> = { work:"#7c3aed", relationships:"#ff375f", health:"#30d158", finance:"#ffd60a", growth:"#0a84ff" };
 type NewBlock = { startHour:number; title:string; area:LifeArea; durationHours:number };
 const EMPTY: NewBlock = { startHour:9, title:"", area:"work", durationHours:1 };
 
@@ -27,7 +26,7 @@ export default function PlannerPage() {
 
   const handleAdd = () => {
     if (!form.title.trim()) { toast.error("Add a title"); return; }
-    addTimeBlock({ date:dateStr, ...form, color:AREA_COLORS[form.area], isCompleted:false });
+    addTimeBlock({ date:dateStr, ...form, color:AREA_CONFIG[form.area].color, isCompleted:false });
     setAdding(false); setForm(EMPTY);
     toast.success("Block added");
   };
@@ -218,10 +217,10 @@ export default function PlannerPage() {
                       <button key={key} onClick={()=>setForm({...form,area:key})}
                         className="flex flex-col items-center gap-1.5 py-3 rounded-2xl transition-all"
                         style={form.area===key
-                          ? { background:`${AREA_COLORS[key]}18`, border:`0.5px solid ${AREA_COLORS[key]}40` }
+                          ? { background:`${AREA_CONFIG[key].color}18`, border:`0.5px solid ${AREA_CONFIG[key].color}40` }
                           : { background:"rgba(255,255,255,0.04)", border:"0.5px solid rgba(255,255,255,0.08)" }}>
                         <span className="text-[18px]">{cfg.icon}</span>
-                        <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color:form.area===key?AREA_COLORS[key]:"rgba(255,255,255,0.3)" }}>
+                        <span className="text-[9px] font-bold uppercase tracking-wide" style={{ color:form.area===key?AREA_CONFIG[key].color:"rgba(255,255,255,0.3)" }}>
                           {cfg.label.slice(0,4)}
                         </span>
                       </button>

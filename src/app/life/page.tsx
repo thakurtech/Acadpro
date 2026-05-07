@@ -7,7 +7,6 @@ import { scoreToColor, scoreToLabel } from "@/lib/utils";
 import { Minus, Plus, Save, TrendingUp } from "lucide-react";
 import toast from "react-hot-toast";
 
-const AREA_COLORS: Record<LifeArea,string> = { work:"#7c3aed", relationships:"#ff375f", health:"#30d158", finance:"#ffd60a", growth:"#0a84ff" };
 const AREAS = Object.entries(AREA_CONFIG) as [LifeArea,(typeof AREA_CONFIG)[LifeArea]][];
 
 export default function LifePage() {
@@ -58,7 +57,7 @@ export default function LifePage() {
       <div className="space-y-3 mb-5">
         {AREAS.map(([key,cfg],i)=>{
           const score = scores[key];
-          const color = AREA_COLORS[key];
+          const color = cfg.color;
           return (
             <motion.div key={key}
               initial={{opacity:0,y:14}} animate={{opacity:1,y:0}} transition={{delay:i*0.07,type:"spring",stiffness:260,damping:22}}
@@ -191,7 +190,7 @@ export default function LifePage() {
               </p>
               <div className="flex gap-1.5">
                 {AREAS.map(([key,cfg])=>(
-                  <div key={key} className="w-2 h-2 rounded-full" style={{background:AREA_COLORS[key]}} title={cfg.label} />
+                  <div key={key} className="w-2 h-2 rounded-full" style={{background:cfg.color}} title={cfg.label} />
                 ))}
               </div>
             </div>

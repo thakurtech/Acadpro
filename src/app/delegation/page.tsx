@@ -6,7 +6,6 @@ import { useAppStore, AREA_CONFIG, type DelegationStatus, type LifeArea, type De
 import { Plus, X, AlertCircle, Clock, CheckCircle2, ArrowRight, Trash2, RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
 
-const AREA_COLORS: Record<LifeArea,string> = { work:"#7c3aed", relationships:"#ff375f", health:"#30d158", finance:"#ffd60a", growth:"#0a84ff" };
 const STATUS_CFG: Record<DelegationStatus,{label:string;color:string;icon:React.ElementType}> = {
   delegated:    { label:"Delegated",   color:"#0a84ff", icon:ArrowRight   },
   "in-progress":{ label:"In Progress", color:"#ffd60a", icon:RefreshCw   },
@@ -194,7 +193,7 @@ export default function DelegationPage() {
                       {(Object.entries(AREA_CONFIG) as [LifeArea,(typeof AREA_CONFIG)[LifeArea]][]).map(([key,cfg])=>(
                         <button key={key} onClick={()=>setForm({...form,area:key})}
                           className="flex items-center justify-center py-3 rounded-2xl text-[16px] transition-all"
-                          style={form.area===key?{background:`${AREA_COLORS[key]}18`,border:`0.5px solid ${AREA_COLORS[key]}35`}:{background:"rgba(255,255,255,0.04)",border:"0.5px solid rgba(255,255,255,0.08)"}}
+                          style={form.area===key?{background:`${AREA_CONFIG[key].color}18`,border:`0.5px solid ${AREA_CONFIG[key].color}35`}:{background:"rgba(255,255,255,0.04)",border:"0.5px solid rgba(255,255,255,0.08)"}}
                           title={cfg.label}>{cfg.icon}
                         </button>
                       ))}
