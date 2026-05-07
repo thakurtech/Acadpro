@@ -3,14 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { LayoutDashboard, CalendarDays, CheckSquare, Users, Sparkles, Zap } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/planner", label: "Planner", icon: CalendarDays },
-  { href: "/tasks", label: "Tasks", icon: CheckSquare },
-  { href: "/delegation", label: "Delegate", icon: Users },
-  { href: "/life", label: "Life Score", icon: Sparkles },
+  { href: "/",           label: "Dashboard", icon: LayoutDashboard },
+  { href: "/planner",    label: "Planner",   icon: CalendarDays   },
+  { href: "/tasks",      label: "Tasks",     icon: CheckSquare    },
+  { href: "/delegation", label: "Delegate",  icon: Users          },
+  { href: "/life",       label: "Life Score",icon: Sparkles       },
 ];
 
 export default function Sidebar() {
@@ -18,93 +17,123 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* ── Desktop sidebar ── */}
-      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-[220px] flex-col z-40 border-r border-bg-border bg-bg-surface">
-        <div className="px-5 py-6 border-b border-bg-border">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center"
-              style={{ boxShadow: "0 0 16px rgba(124,58,237,0.5)" }}>
-              <Zap size={16} className="text-white fill-white" />
+      {/* ── Desktop sidebar ─────────────────────────────────── */}
+      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-60 flex-col z-40"
+        style={{
+          background: "rgba(8,8,12,0.92)",
+          backdropFilter: "blur(40px) saturate(180%)",
+          WebkitBackdropFilter: "blur(40px) saturate(180%)",
+          borderRight: "0.5px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        {/* Logo */}
+        <div className="px-6 pt-8 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-2xl flex items-center justify-center shrink-0"
+              style={{
+                background: "linear-gradient(135deg,#7c3aed,#5e5ce6)",
+                boxShadow: "0 4px 16px rgba(124,58,237,0.45)",
+              }}
+            >
+              <Zap size={17} className="text-white fill-white" />
             </div>
             <div>
-              <span className="font-black text-[15px] text-ink-primary tracking-tight">APEX</span>
-              <p className="text-[9px] text-ink-muted font-semibold tracking-widest uppercase">Life OS</p>
+              <p className="font-black text-base tracking-tight" style={{ color: "rgba(255,255,255,0.95)" }}>APEX</p>
+              <p className="text-[10px] font-semibold tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>Life OS</p>
             </div>
           </div>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-0.5">
+        {/* Nav items */}
+        <nav className="flex-1 px-3 space-y-0.5">
           {NAV.map(({ href, label, icon: Icon }) => {
             const active = path === href;
             return (
               <Link key={href} href={href}>
-                <motion.div whileHover={{ x: 2 }} whileTap={{ scale: 0.97 }}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all relative",
-                    active ? "text-ink-primary" : "text-ink-secondary hover:text-ink-primary hover:bg-bg-hover"
-                  )}
-                  style={active ? { background: "rgba(124,58,237,0.12)" } : {}}
+                <motion.div whileTap={{ scale: 0.97 }}
+                  className="relative flex items-center gap-3 px-3.5 py-2.5 rounded-2xl transition-colors"
+                  style={{
+                    background: active ? "rgba(124,58,237,0.15)" : "transparent",
+                    color: active ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.45)",
+                  }}
+                  onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                  onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                 >
                   {active && (
-                    <motion.div layoutId="nav-pill"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                      style={{ background: "#a855f7" }}
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    <motion.div layoutId="sidebar-pill"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
+                      style={{ background: "#bf5af2" }}
+                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
                     />
                   )}
-                  <Icon size={16} className={active ? "text-accent-glow" : "text-ink-muted"} />
-                  <span>{label}</span>
+                  <Icon size={16}
+                    style={{ color: active ? "#bf5af2" : "rgba(255,255,255,0.35)" }}
+                    className="shrink-0"
+                  />
+                  <span className="text-sm font-semibold">{label}</span>
                 </motion.div>
               </Link>
             );
           })}
         </nav>
 
-        <div className="px-4 py-4 border-t border-bg-border">
-          <div className="rounded-xl px-3 py-2.5" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.15)" }}>
-            <p className="text-[9px] text-ink-muted font-semibold uppercase tracking-widest">Mode</p>
-            <p className="text-xs text-accent-glow font-medium mt-0.5">Top 0.1% 🔥</p>
+        {/* Bottom badge */}
+        <div className="p-4 pb-6">
+          <div className="rounded-2xl px-4 py-3"
+            style={{ background: "rgba(124,58,237,0.08)", border: "0.5px solid rgba(124,58,237,0.2)" }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "rgba(191,90,242,0.7)" }}>Mode</p>
+            <p className="text-sm font-bold mt-0.5" style={{ color: "rgba(255,255,255,0.8)" }}>Top 0.1% 🔥</p>
           </div>
         </div>
       </aside>
 
-      {/* ── Mobile top header ── */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3"
-        style={{ background: "rgba(8,8,15,0.9)", backdropFilter: "blur(20px)", borderBottom: "1px solid #1e1e3a" }}>
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center"
-            style={{ boxShadow: "0 0 12px rgba(124,58,237,0.5)" }}>
-            <Zap size={13} className="text-white fill-white" />
+      {/* ── Mobile header ───────────────────────────────────── */}
+      <header className="md:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between px-5 py-4"
+        style={{
+          background: "rgba(0,0,0,0.85)",
+          backdropFilter: "blur(40px) saturate(180%)",
+          WebkitBackdropFilter: "blur(40px) saturate(180%)",
+          borderBottom: "0.5px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#5e5ce6)", boxShadow: "0 2px 10px rgba(124,58,237,0.5)" }}>
+            <Zap size={15} className="text-white fill-white" />
           </div>
-          <span className="font-black text-[14px] text-ink-primary">APEX</span>
+          <span className="font-black text-[15px]" style={{ color: "rgba(255,255,255,0.95)" }}>APEX</span>
         </div>
-        <span className="text-[10px] text-accent-glow font-semibold uppercase tracking-widest">Top 0.1% 🔥</span>
+        <span className="text-[11px] font-bold" style={{ color: "rgba(191,90,242,0.8)" }}>Top 0.1% 🔥</span>
       </header>
 
-      {/* ── Mobile bottom nav ── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50"
-        style={{ background: "rgba(8,8,15,0.95)", backdropFilter: "blur(24px)", borderTop: "1px solid #1e1e3a" }}>
-        <div className="flex items-center justify-around px-1 py-2 pb-safe">
+      {/* ── Mobile tab bar ──────────────────────────────────── */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-50"
+        style={{
+          background: "rgba(0,0,0,0.88)",
+          backdropFilter: "blur(40px) saturate(200%)",
+          WebkitBackdropFilter: "blur(40px) saturate(200%)",
+          borderTop: "0.5px solid rgba(255,255,255,0.08)",
+        }}
+      >
+        <div className="flex items-center px-2 pt-2 pb-safe">
           {NAV.map(({ href, label, icon: Icon }) => {
             const active = path === href;
             return (
               <Link key={href} href={href} className="flex-1">
                 <motion.div whileTap={{ scale: 0.85 }}
-                  className="flex flex-col items-center gap-0.5 py-1.5 px-1 rounded-xl relative"
+                  className="flex flex-col items-center gap-1 py-1.5 rounded-2xl relative"
                 >
                   {active && (
-                    <motion.div layoutId="mobile-active"
-                      className="absolute inset-0 rounded-xl"
+                    <motion.div layoutId="tab-bg"
+                      className="absolute inset-0 rounded-2xl"
                       style={{ background: "rgba(124,58,237,0.15)" }}
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
                     />
                   )}
-                  <Icon size={22} className={active ? "text-accent-glow" : "text-ink-muted"} />
-                  <span className={cn(
-                    "text-[9px] font-semibold z-10",
-                    active ? "text-accent-glow" : "text-ink-muted"
-                  )}>
-                    {label}
+                  <Icon size={22} style={{ color: active ? "#bf5af2" : "rgba(255,255,255,0.3)", zIndex: 1 }} />
+                  <span className="text-[10px] font-semibold z-10"
+                    style={{ color: active ? "#bf5af2" : "rgba(255,255,255,0.3)" }}>
+                    {label.split(" ")[0]}
                   </span>
                 </motion.div>
               </Link>
